@@ -1,3 +1,5 @@
-GET https://fullstackopen-uora.onrender.com/api/persons
+GET http://localhost:3001/persons
 
 //http://localhost:3001/api/persons
+
+//https://fullstackopen-uora.onrender.com/api/persons

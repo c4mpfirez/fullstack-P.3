@@ -1,9 +1,10 @@
-POST https://fullstackopen-uora.onrender.com/api/persons
+POST http://localhost:3001/persons
 Content-Type: application/json
 
 {
-    "name": "Jonjon",
+    "name": "Jonjoooon",
     "number": "20202020"
 }
 
 //POST http://localhost:3001/api/persons
+//https://fullstackopen-uora.onrender.com/api/persons
