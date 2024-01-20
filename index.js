@@ -9,20 +9,20 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('dist'))
 
-morgan.token('body', (req) => JSON.stringify(req.body));
+morgan.token('body', (req) => JSON.stringify(req.body))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 app.get('/info', (req, res, next) => {
-  console.log('Processing /info request') 
+  console.log('Processing /info request')
   Person.countDocuments({}).then((count) => {
-    console.log('Counted documents:', count) 
+    console.log('Counted documents:', count)
     const currentTime = new Date()
     const infoMessage = `Phonebook has info for ${count} people.`
     res.send(`<p>${infoMessage}</p>\n<p>${currentTime}</p>`)
   })
-  .catch((error) => next(error))
+    .catch((error) => next(error))
 })
-app.get('/api/persons', (req, res) => {
+app.get('/api/persons', (req, res, next) => {
   Person.find({}).then((persons) => {
     res.json(persons)
   }).catch(error => next(error))
@@ -71,24 +71,24 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
-  const {name, number} = req.body
+  const { name, number } = req.body
   Person.findByIdAndUpdate(
     req.params.id,
-    {name, number},
-    {new: true, runValidators: true, context: 'query'}
+    { name, number },
+    { new: true, runValidators: true, context: 'query' }
   )
-  .then(updatedPerson => {
-    res.json(updatedPerson)
-  })
-  .catch(error => next(error))
+    .then(updatedPerson => {
+      res.json(updatedPerson)
+    })
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
   if (error.name === 'CastError') {
-    return response.status(400).send({error: 'malformatted id'})
+    return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-    return response.status(400).json({error: error.message})
+    return response.status(400).json({ error: error.message })
   }
   next(error)
 }
